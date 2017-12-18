@@ -102,8 +102,6 @@ let bar = 2 ;
 
 上面的代码中，变量foo用var命令声明，会发生变量提升，即脚本开始运行时，变量foo已经存在了，但是没有值，所以会输出undefined。变量bar用let命令声明，不会发生变量提升。这表示在声明它之前，变量bar是不存在的，这时如果用到它，就会抛出一个错误。
 
-
-
 ### 暂时性死区
 
 只要块级作用域内存在let命令，它声明的变量就"绑定"（binding）这个区域，不再受外部的影响。
@@ -119,4 +117,32 @@ if(true){
 上面代码中，存在全局变量tmp，但是块级作用域内let又声明了一个局部变量tmp，导致后者绑定这个块级作用域，所以在let声明变量前，对tmp赋值会报错。
 
 ES6明确规定，如果区块中存在let和const命令，这个区块对这些命令声明的变量，从一开始就形成了封闭作用域。凡是在声明之前就使用这些变量，就会报错。
+
+总之，在代码块内，使用let命令声明变量之前，该变量是不可用的。这在语法上，称为"暂时性死区"（temporal dead zone，简称TDZ）。
+
+```
+if(true){
+    // TDZ开始
+    tmp = 'abc' ;// ReferenceError
+    console.log(tmp) ;// ReferenceError
+    
+    let tmp; // TDZ 结束
+    
+    console.log(tmp) //undefined
+    
+    tem = 123;
+    console.log(tmp) ;123
+}
+```
+
+上面代码中，在let命令声明变量tmp之前，都属于变量tmp的"死区"。
+
+"暂时性死区"也意味着typeof不再是一个百分之百的安全的操作
+
+```
+typeof x;//ReferenceError
+let x;
+```
+
+
 
