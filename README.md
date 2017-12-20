@@ -144,8 +144,6 @@ typeof x;//ReferenceError
 let x;
 ```
 
-
-
 # let 和 const 命令 {#let-const-}
 
 ## 1、let命令：
