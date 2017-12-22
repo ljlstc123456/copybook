@@ -530,7 +530,7 @@ function f(){console.log('I am outside!');}
         //重复声明一次函数f
         function f(){console.log('I am inside!');}
     }
-    
+
     f();
 }());         
 // Uncaught TypeError: f is not a function
@@ -547,7 +547,7 @@ function f(){console.log('I am outside!');}
         //重复声明一次函数f
         function f(){console.log('I am inside!');}
     }
-    
+
     f();
 }());         
 // Uncaught TypeError: f is not a function
@@ -586,6 +586,87 @@ if(true){
 'use strict';
 if(true)
     function f(){}
+```
+
+### do表达式
+
+本质上，块级作用域是一个语句，将多个操作封装在一起，没有返回值。
+
+```
+{
+    let t = f();
+    t = t * t + 1;
+}
+```
+
+上面代码中，块级作用域将两个语句封装在一起。但是，在块级作用域以外，没有办法得t的值，因为块级作用域不返回值，除非t是全景变量。
+
+现在有一个提案，使得块级作用域可以变为表达式，也就是说可以返回值，办法就是在块级作用域之前加上do，使它变为do表达式，然后就会返回内部最后执行的表达式的值。
+
+```
+let x = do {
+    let t = f();
+    t * t + 1;
+} ;
+```
+
+上面代码中，变量x会得到整个块级作用域的返回值（t  \* t + 1）
+
+## const命令
+
+### 基本用法
+
+const声明一个只读的常量。一旦声明，常量的值就不能改变。
+
+```
+const PI = 3.1415;
+PI //3.1415
+
+PI = 3;
+//TypeError:Assignment to constant variable.
+```
+
+上面代码表明改变常量的值会报错。
+
+const声明的变量不得改变值，这意味着，const一旦声明变量，就必须立即初始化，不能留到以后赋值。
+
+```
+const foo ;
+// SyntaxError:Missing initializer in const declaration
+```
+
+上面代码表示，对于const来说，只声明不赋值，就会报错。
+
+const的作用域与let命令相同：只在声明所在的块级作用域内有效。
+
+```
+if(true){
+    const MAX = 5 ;
+}
+
+MAX //Uncaught ReferenceError:MAX is not defined
+```
+
+const命令声明的常量也是不提升，同样存在暂时性死区，只能在声明的位置后面使用。
+
+```
+if(true){
+    console.log(MAX);//ReferenceError
+    const MAX = 5;
+}
+```
+
+上面代码在常量MAX声明之前就调用，结果报错。
+
+const声明的常量，也与let一样不可重复声明。
+
+```
+var message = "Hello!";
+let age = 25 ;
+
+//以下两行都会报错
+const message = "Goodbye!";
+const age = 30;
 ```
 
 
