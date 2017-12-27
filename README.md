@@ -697,7 +697,7 @@ a = ['Dave']; //报错
 
 上面代码中，常量a是一个数组，这个数组本身是可写的，但是如果将另一个数组赋值给a，就会报错。
 
- 如果真的想将对象冻结，应该使用Object.freeze方法。
+如果真的想将对象冻结，应该使用Object.freeze方法。
 
 ```
 const foo = Object.freeze({}) ;
@@ -744,9 +744,28 @@ window.a //2
 
 ES6为了改变这一点，一方面规定，为了保持兼容性，var命令和function命令声明的全局变量，依旧是顶层对象的属性；另一方面规定，let命令、const命令、class命令声明的全局变量，不属于顶层对象的属性。也就是说，从ES6开始，全局变量将逐步与顶层对象的属性脱钩。
 
+```
+var a = 1;
+//如果在node的REPL环境，可以写成global.a
+//或者采用通用方法，写成this.a
+window.a //1
+
+let b = 1;
+window.b //undefined
+```
+
+上面代码中，全局变量a有var声明，所以它是顶层对象的属性；全局变量b有let声明，所以它不是顶层对象的属性，返回undefined。
 
 
 
+## 5.global对象
+
+ES5的顶层对象，本身也是一个问题，因为它在各种实现里面不是统一的。
+
+*  浏览器里面，顶层对象是window，但是node和web worker没有window。
+
+*  浏览器和web worker里面，self也指向顶层对象，但是Node没有self。
+* node里面，顶层对象global，但其他环境都不支持。
 
 
 
