@@ -756,15 +756,14 @@ window.b //undefined
 
 上面代码中，全局变量a有var声明，所以它是顶层对象的属性；全局变量b有let声明，所以它不是顶层对象的属性，返回undefined。
 
-
-
 ## 5.global对象
 
 ES5的顶层对象，本身也是一个问题，因为它在各种实现里面不是统一的。
 
-*  浏览器里面，顶层对象是window，但是node和web worker没有window。
+* 浏览器里面，顶层对象是window，但是node和web worker没有window。
 
-*  浏览器和web worker里面，self也指向顶层对象，但是Node没有self。
+* 浏览器和web worker里面，self也指向顶层对象，但是Node没有self。
+
 * node里面，顶层对象global，但其他环境都不支持。
 
 
