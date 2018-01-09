@@ -781,7 +781,7 @@ ES5的顶层对象，本身也是一个问题，因为它在各种实现里面�
      typeof global === 'object')
      ? global
      : this) ;
-     
+
 //方法2
 var getGlobal = function() {
   if(typeof self !== 'undefined')
